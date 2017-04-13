@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+		<title> myPong v1.0</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		
+		<script src="./scripts/drawPlayer.js"></script>
+		<script src="./scripts/Controller.js"></script>
+		<script src="./scripts/drawBall.js"></script>
+</head>
+
+<body>
+	<canvas id="myCanvas" tabindex='1' style="position:absolute; float:top">Your browser doesn't support canvas!</canvas>
+	<div id="score" style="font-size:50px; float:right">
+		<h1 id="Player"></h1>
+	</div>
+	
+	<script>
+		// .gitignore
+		var canvas = document.getElementById("myCanvas");
+		var palette = canvas.getContext("2d");
+		var ball;
+		//var running = true;
+		var playerEnemy;
+		var mainInt;
+		var ballSpeedInt;
+		var playerScore = 0;
+		var enemyScore = 0;
+	
+		let cont = new Controller();
+		let playerMain;
+		let frame = 16;
+		
+		function main(){
+			//window.requestAnimationFrame(main);
+			ballSpeedInt = setInterval(function(){
+				ball.velX *= 1.2;
+				ball.velY *= 1.1;
+			},10000);
+		
+			mainInt = setInterval(function(){
+			palette.clearRect(0, 0, canvas.width, canvas.height);
+			cont.moveBall();
+			cont.moveEnemy();
+			playerMain.recDraw(playerMain.posY);
+			cont.checkIfTouch();
+			}, frame);
+			
+		}
+		//alert("Y u do dis?");
+		function start(){
+			$("#Player").append(playerScore + " : " + enemyScore);
+			canvas.setAttribute("width", window.innerWidth - 350);
+			canvas.setAttribute("height", window.innerHeight - 50);
+			
+			playerMain = new drawPlayer(1);
+			playerEnemy = new drawPlayer(0);
+			ball = new drawBall();
+		}
+		
+		$(document).on('keydown', function(){cont.movePlayer(event.key)});
+		start();
+		main();
+	</script>
+</body>
+<html>
