@@ -1,20 +1,28 @@
 class Controller{
 	movePlayer(keyPressed){
 			//alert(keyPressed);
+			
 		switch(keyPressed){
 			case "w": 
 				palette.fillStyle = "#0000FF";
-				playerMain.recDraw(playerMain.posY - 20);
+				this.playerInt = setInterval(function(){	
+					playerMain.recDraw(playerMain.posY - 15);
+				},1000/60);
 				break;
 			case "s":
-				palette.fillStyle = "#0000FF";
-				playerMain.recDraw(playerMain.posY + 20);
+				this.playerInt = setInterval(function(){	
+					playerMain.recDraw(playerMain.posY + 15);
+				},1000/60);
+				break;
+			case "c":
+				this.kill;
 				break;
 			case "Escape":
 				this.reset();
 			default:
 				break;
-		}
+		}	
+		//window.requestAnimationFrame(movingPlayer);
 	}
 	
 	moveEnemy(){
@@ -30,8 +38,32 @@ class Controller{
 			ball.posX += ball.velX;
 		else{
 			//alert("menim smer X");
-			ball.velX *= -1;
-			ball.posX += ball.velX;
+			if((playerMain.posY > ball.posY)||(playerMain.posY + (playerMain.recHeight*0.3333) < ball.posY)){
+				ball.velX *= -1;
+				if(ball.velY < 0){
+					ball.velY *= -1;
+					ball.velX *= 1.2;
+				}
+				else{
+					ball.velY *= 1.3;
+					ball.velX *= 0.8;
+				}
+				ball.posX += ball.velX;
+			} else if ((playerMain.posY + (playerMain.recHeight*0.3333) > ball.posY)||(playerMain.posY + (playerMain.recHeight*0.6666) < ball.posY)){
+				ball.velX *= -1.3;
+				ball.posX += ball.velX;
+			} else{
+				ball.velX *= -1;
+				if(ball.velY < 0){
+					ball.velX *= 0.8;
+					ball.velY *= 1.3;
+				}
+				else{
+					ball.velX *= 1.2;
+					ball.velY *= -1;
+				}
+				ball.posX += ball.velX;
+			}
 		}
 		if(ball.posY > 50 && ball.posY < palette.canvas.height - 100)
 			ball.posY += ball.velY;
@@ -57,6 +89,12 @@ class Controller{
 			this.reset();
 		}
 		//console.log("nazdar");
+	}
+	
+	kill(){
+		clearInterval(ballSpeedInt);
+		clearInterval(mainInt);
+		clearInterval(this.playerInt);
 	}
 	
 	reset(){

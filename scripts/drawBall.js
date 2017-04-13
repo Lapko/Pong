@@ -1,10 +1,15 @@
 class drawBall{
 	constructor(){
+		this.decideWay = (Math.random()*10)%2;
+		//alert(this.decideWay);
 		this.posX = (palette.canvas.width-500)/2;
 		this.posY = palette.canvas.height/2;
 		this.radius = 50;
-		this.velX = 10;
-		this.velY = 10;
+		this.velX = Math.random()*10 + 5;
+		if(this.decideWay > 1)
+			this.velY = Math.random()*10 + 3;
+		else
+			this.velY = (Math.random()*10 + 3)* -1;
 		//this.angle = 45;
 		
 		this.drawBall();
