@@ -26,7 +26,22 @@ class Controller{
 	}
 	//sadasda
 	moveBall(){
-		ball.drawBall(ball.velX,ball.velY);
+		if(ball.posX > 100 && ball.posX < palette.canvas.width - 200)
+			ball.posX += ball.velX;
+		else{
+			//alert("menim smer X");
+			ball.velX *= -1;
+			ball.posX += ball.velX;
+		}
+		if(ball.posY > 50 && ball.posY < palette.canvas.height - 100)
+			ball.posY += ball.velY;
+		else{
+			//alert("menim smer Y");
+			ball.velY *= -1;
+			ball.posY += ball.velY;
+		}
+		
+		ball.drawBall();
 	}
 	
 	checkIfTouch(){
