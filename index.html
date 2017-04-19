@@ -14,7 +14,7 @@
 <body>
 	<canvas id="myCanvas" tabindex='1' style="position:absolute; float:top">Your browser doesn't support canvas!</canvas>
 	<div id="score" style="font-size:50px; float:right">
-		<h1 id="Player"></h1>
+		<h1 id="Score"></h1>
 	</div>
 	
 	<script>
@@ -37,15 +37,16 @@
 		
 		function main(){
 			//window.requestAnimationFrame(main);
-			ballSpeedInt = setInterval(function(){
+			/*ballSpeedInt = setInterval(function(){
 				ball.velX *= 1.2;
 				ball.velY *= 1.1;
-			},10000);
+			},10000);*/
 		
 			mainInt = setInterval(function(){
 			palette.clearRect(0, 0, canvas.width, canvas.height);
 			cont.moveBall();
 			cont.moveEnemy();
+			window.requestAnimationFrame(cont.moveEnemy);
 			if(pressed === false)
 				clearInterval(cont.playerInt);
 				
@@ -57,7 +58,7 @@
 		}
 		//alert("Y u do dis?");
 		function start(){
-			$("#Player").append(playerScore + " : " + enemyScore);
+			$("#Score").append(playerScore + " : " + enemyScore);
 			canvas.setAttribute("width", window.innerWidth - 350);
 			canvas.setAttribute("height", window.innerHeight - 50);
 			
